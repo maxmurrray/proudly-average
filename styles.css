@@ -72,7 +72,8 @@ h1 {
 }
 
 .signup-form input::placeholder {
-    color: #aaa;
+    font-weight: 100;
+    color: #555;
 }
 
 .signup-form button {
