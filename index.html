@@ -13,7 +13,7 @@
         <main>
             <h1>Stay in the loop!</h1>
             <div class="form-wrapper">
-                <form class="signup-form" onsubmit="return false;">
+                <form class="signup-form" id="signupForm">
                     <input type="tel" placeholder="Phone number...">
                     <div class="btn-group">
                         <div class="btn-flip-root" id="submitFlip">
@@ -21,6 +21,9 @@
                                 <button type="submit" class="btn-face btn-face-front">
                                     <span class="fill-bar"></span>
                                     <span class="btn-text">Submit</span>
+                                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path class="check-path" d="M4 12 L9 17 L20 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                                 <button type="submit" class="btn-face btn-face-back">SAVE15</button>
                             </div>
@@ -40,23 +43,69 @@
     </div>
     <script>
         (function () {
-            // Only run the flip interaction on desktop (real hover/mouse devices)
-            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-            var root  = document.getElementById('submitFlip');
-            var inner = root.querySelector('.btn-flip-inner');
-            var timer = null;
+            /* ── Promo flip (desktop hover only) ─────────────────── */
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                var root  = document.getElementById('submitFlip');
+                var inner = root.querySelector('.btn-flip-inner');
+                var timer = null;
 
-            root.addEventListener('mouseenter', function () {
-                timer = setTimeout(function () {
-                    inner.classList.add('is-flipped');
-                }, 1500);
+                root.addEventListener('mouseenter', function () {
+                    timer = setTimeout(function () {
+                        inner.classList.add('is-flipped');
+                    }, 1500);
+                });
+
+                root.addEventListener('mouseleave', function () {
+                    clearTimeout(timer);
+                    timer = null;
+                });
+            }
+
+            /* ── Submit: collapse → green circle → draw checkmark ── */
+            document.getElementById('signupForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                var flipRoot  = document.getElementById('submitFlip');
+                var frontFace = flipRoot.querySelector('.btn-face-front');
+                var btnText   = flipRoot.querySelector('.btn-text');
+                var fillBar   = flipRoot.querySelector('.fill-bar');
+                var checkIcon = flipRoot.querySelector('.check-icon');
+                var checkPath = flipRoot.querySelector('.check-path');
+
+                // Compute checkmark path length for stroke animation
+                var pathLen = checkPath.getTotalLength();
+                checkPath.style.strokeDasharray  = pathLen;
+                checkPath.style.strokeDashoffset = pathLen;
+
+                // Freeze explicit width so CSS transition can animate from it
+                var w = flipRoot.offsetWidth;
+                var h = flipRoot.offsetHeight;
+                flipRoot.style.width = w + 'px';
+                void flipRoot.offsetWidth; // force reflow
+
+                // Step 1 — collapse width to a circle (fast: 220ms)
+                flipRoot.style.transition = 'width 0.22s cubic-bezier(0.4, 0, 0.2, 1)';
+                flipRoot.style.width = h + 'px';
+
+                // Step 2 — flip green + hide text
+                setTimeout(function () {
+                    frontFace.style.transition = 'background 0.15s, border-color 0.15s';
+                    frontFace.style.background  = '#22c55e';
+                    frontFace.style.borderColor = '#22c55e';
+                    btnText.style.display  = 'none';
+                    fillBar.style.display  = 'none';
+
+                    // Step 3 — draw the checkmark
+                    setTimeout(function () {
+                        checkIcon.style.display = 'block';
+                        checkPath.style.transition = 'stroke-dashoffset 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+                        checkPath.style.strokeDashoffset = '0';
+                    }, 150);
+
+                }, 220);
             });
 
-            root.addEventListener('mouseleave', function () {
-                clearTimeout(timer);
-                timer = null;
-            });
         })();
     </script>
 </body>

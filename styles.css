@@ -165,6 +165,16 @@ h1 {
     z-index: 1;
 }
 
+/* Checkmark — hidden until submit fires */
+.check-icon {
+    display: none;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    z-index: 2;
+    pointer-events: none;
+}
+
 /* Privacy Policy — no underline, centered under Submit, blue on hover */
 .privacy-link {
     margin-top: 3px;
