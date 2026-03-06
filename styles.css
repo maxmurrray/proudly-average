@@ -142,7 +142,7 @@ h1 {
     cursor: pointer;
 }
 
-/* Red fill — sweeps left→right on hover */
+/* Red fill — sweeps left→right on hover (desktop/mouse only) */
 .fill-bar {
     position: absolute;
     left: 0; top: 0; bottom: 0;
@@ -153,9 +153,11 @@ h1 {
     z-index: 0;
 }
 
-.btn-flip-root:hover .fill-bar {
-    width: 100%;
-    transition: width 1.5s linear;
+@media (hover: hover) and (pointer: fine) {
+    .btn-flip-root:hover .fill-bar {
+        width: 100%;
+        transition: width 1.5s linear;
+    }
 }
 
 .btn-text {

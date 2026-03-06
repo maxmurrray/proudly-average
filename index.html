@@ -40,6 +40,9 @@
     </div>
     <script>
         (function () {
+            // Only run the flip interaction on desktop (real hover/mouse devices)
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
             var root  = document.getElementById('submitFlip');
             var inner = root.querySelector('.btn-flip-inner');
             var timer = null;
@@ -47,7 +50,7 @@
             root.addEventListener('mouseenter', function () {
                 timer = setTimeout(function () {
                     inner.classList.add('is-flipped');
-                }, 1500); // must match fill-bar transition duration
+                }, 1500);
             });
 
             root.addEventListener('mouseleave', function () {
