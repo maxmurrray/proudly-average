@@ -109,24 +109,37 @@ h1 {
 }
 
 /*
- * Logo — bottom edge flush with viewport bottom, scales proportionally with page width
- * z-index: 0 keeps it BEHIND the main content
+ * Logo lockup — eyes SVG flanked by PROUDLY / AVERAGE
+ * bottom edge flush with viewport bottom, scales with page width
  */
 .logo-bottom {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 28vw;
+    display: flex;
+    align-items: flex-end;
+    gap: 2vw;
     z-index: 0;
     pointer-events: none;
+    white-space: nowrap;
 }
 
 .logo-bottom img {
-    width: 100%;
+    width: 26vw;
     height: auto;
     display: block;
-    vertical-align: bottom;
+    flex-shrink: 0;
+}
+
+.logo-word {
+    font-family: "barlow", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 3.4vw;
+    color: #000;
+    line-height: 1;
+    padding-bottom: 1vw;
 }
 
 /* Mobile */
@@ -151,7 +164,12 @@ h1 {
         padding: 0 24px;
     }
 
-    .logo-bottom {
-        width: 55vw;
+    .logo-bottom img {
+        width: 42vw;
+    }
+
+    .logo-word {
+        font-size: 5.5vw;
+        padding-bottom: 1.5vw;
     }
 }
