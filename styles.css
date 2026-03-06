@@ -124,8 +124,9 @@ h1 {
 
 /* =====================
    INTRO ANIMATION
-   - 3s delay, then eyes rise + words slam in together
-   - ease-in: starts slow/smooth, accelerates to a hard stop (slam)
+   - tiny delay on load, then everything fires together
+   - eyes rise fast from below
+   - words blast in from screen edges with overshoot snap (slam effect)
    ===================== */
 
 @keyframes eyes-rise {
@@ -134,13 +135,17 @@ h1 {
 }
 
 @keyframes word-left {
-    from { transform: translateX(-220px); opacity: 0; }
-    to   { transform: translateX(0);      opacity: 1; }
+    0%   { transform: translateX(-100vw); opacity: 0; }
+    15%  { opacity: 1; }
+    88%  { transform: translateX(10px); }
+    100% { transform: translateX(0); }
 }
 
 @keyframes word-right {
-    from { transform: translateX(220px);  opacity: 0; }
-    to   { transform: translateX(0);      opacity: 1; }
+    0%   { transform: translateX(100vw);  opacity: 0; }
+    15%  { opacity: 1; }
+    88%  { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
 }
 
 /*
@@ -157,8 +162,7 @@ h1 {
     z-index: 0;
     pointer-events: none;
     white-space: nowrap;
-    /* starts below viewport during 3s delay, then rises and slams */
-    animation: eyes-rise 1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
+    animation: eyes-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 .logo-bottom img {
@@ -178,13 +182,13 @@ h1 {
     padding-bottom: 1vw;
 }
 
-/* PROUDLY slides in from left, AVERAGE from right — same timing as eyes */
+/* PROUDLY from left edge, AVERAGE from right edge — same slam timing */
 .logo-word:first-child {
-    animation: word-left  1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
+    animation: word-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 .logo-word:last-child {
-    animation: word-right 1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
+    animation: word-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 /* Mobile */
