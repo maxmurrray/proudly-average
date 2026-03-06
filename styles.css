@@ -179,14 +179,14 @@ h1 {
 
 /* =====================
    INTRO ANIMATION
-   - tiny delay on load, then everything fires together
-   - eyes rise fast from below
-   - words blast in from screen edges with overshoot snap (slam effect)
+   Step 1 (0.15s): Eyes rise up from below — 0.7s
+   Step 2 (0.85s): PROUDLY blasts from left, AVERAGE from right — 0.7s
+   Words are independent of the eyes container so they truly come from the sides
    ===================== */
 
 @keyframes eyes-rise {
-    from { transform: translateX(-50%) translateY(110%); }
-    to   { transform: translateX(-50%) translateY(0%); }
+    from { transform: translateY(110%); }
+    to   { transform: translateY(0); }
 }
 
 @keyframes word-left {
@@ -203,47 +203,47 @@ h1 {
     100% { transform: translateX(0); }
 }
 
-/*
- * Logo lockup — eyes SVG flanked by PROUDLY / AVERAGE
- * bottom edge flush with viewport bottom, scales with page width
- */
+/* Eyes only — centered by offsetting left by half the SVG width */
 .logo-bottom {
     position: absolute;
     bottom: 0;
-    left: 50%;
-    display: flex;
-    align-items: flex-end;
-    gap: 2vw;
+    left: calc(50% - 13vw);
+    width: 26vw;
     z-index: 0;
     pointer-events: none;
-    white-space: nowrap;
     animation: eyes-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 .logo-bottom img {
-    width: 26vw;
+    width: 100%;
     height: auto;
     display: block;
-    flex-shrink: 0;
 }
 
+/* PROUDLY + AVERAGE — absolutely positioned, flanking the eyes */
 .logo-word {
+    position: absolute;
+    bottom: 1vw;
+    z-index: 0;
+    pointer-events: none;
     font-family: "barlow", sans-serif;
     font-weight: 800;
     font-style: italic;
     font-size: 3.4vw;
     color: #000;
     line-height: 1;
-    padding-bottom: 1vw;
+    white-space: nowrap;
 }
 
-/* PROUDLY from left edge, AVERAGE from right edge — same slam timing */
-.logo-word:first-child {
-    animation: word-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+/* Fires after eyes finish: delay = eyes-delay(0.15s) + eyes-duration(0.7s) = 0.85s */
+.logo-word-left {
+    right: calc(50% + 13vw + 2vw);
+    animation: word-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
 }
 
-.logo-word:last-child {
-    animation: word-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+.logo-word-right {
+    left: calc(50% + 13vw + 2vw);
+    animation: word-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
 }
 
 /* Mobile */
@@ -269,12 +269,20 @@ h1 {
         padding: 0 24px;
     }
 
-    .logo-bottom img {
+    .logo-bottom {
+        left: calc(50% - 21vw);
         width: 42vw;
     }
 
     .logo-word {
         font-size: 5.5vw;
-        padding-bottom: 1.5vw;
+    }
+
+    .logo-word-left {
+        right: calc(50% + 21vw + 2vw);
+    }
+
+    .logo-word-right {
+        left: calc(50% + 21vw + 2vw);
     }
 }
