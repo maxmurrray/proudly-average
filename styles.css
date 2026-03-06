@@ -108,17 +108,15 @@ h1 {
 }
 
 /*
- * Logo — rises from bottom, ~40% cut off by viewport edge
+ * Logo — bottom edge flush with viewport bottom, scales proportionally with page width
  * z-index: 0 keeps it BEHIND the main content
- * translateY(40%) pushes 40% of logo height below the viewport bottom
  */
 .logo-bottom {
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(40%);
-    width: 580px;
-    max-width: 90vw;
+    transform: translateX(-50%);
+    width: 80vw;
     z-index: 0;
     pointer-events: none;
 }
@@ -127,6 +125,7 @@ h1 {
     width: 100%;
     height: auto;
     display: block;
+    vertical-align: bottom;
 }
 
 /* Mobile */
@@ -152,6 +151,6 @@ h1 {
     }
 
     .logo-bottom {
-        width: 100vw;
+        width: 95vw;
     }
 }
