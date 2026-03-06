@@ -139,7 +139,7 @@ h1 {
     font-weight: 800;
     letter-spacing: 3px;
     transform: rotateY(180deg);
-    cursor: default;
+    cursor: pointer;
 }
 
 /* Red fill — sweeps left→right on hover */
