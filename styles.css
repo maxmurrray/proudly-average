@@ -120,6 +120,27 @@ h1 {
     color: #0066cc;
 }
 
+/* =====================
+   INTRO ANIMATION
+   - 3s delay, then eyes rise + words slam in together
+   - ease-in: starts slow/smooth, accelerates to a hard stop (slam)
+   ===================== */
+
+@keyframes eyes-rise {
+    from { transform: translateX(-50%) translateY(110%); }
+    to   { transform: translateX(-50%) translateY(0%); }
+}
+
+@keyframes word-left {
+    from { transform: translateX(-220px); opacity: 0; }
+    to   { transform: translateX(0);      opacity: 1; }
+}
+
+@keyframes word-right {
+    from { transform: translateX(220px);  opacity: 0; }
+    to   { transform: translateX(0);      opacity: 1; }
+}
+
 /*
  * Logo lockup — eyes SVG flanked by PROUDLY / AVERAGE
  * bottom edge flush with viewport bottom, scales with page width
@@ -128,13 +149,14 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: flex-end;
     gap: 2vw;
     z-index: 0;
     pointer-events: none;
     white-space: nowrap;
+    /* starts below viewport during 3s delay, then rises and slams */
+    animation: eyes-rise 1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
 }
 
 .logo-bottom img {
@@ -152,6 +174,15 @@ h1 {
     color: #000;
     line-height: 1;
     padding-bottom: 1vw;
+}
+
+/* PROUDLY slides in from left, AVERAGE from right — same timing as eyes */
+.logo-word:first-child {
+    animation: word-left  1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
+}
+
+.logo-word:last-child {
+    animation: word-right 1.4s cubic-bezier(0.4, 0, 1, 1) 3s both;
 }
 
 /* Mobile */
