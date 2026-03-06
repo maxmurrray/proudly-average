@@ -34,17 +34,18 @@ main {
 }
 
 h1 {
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 22px;
-    text-align: center;
+    font-size: 33px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    text-align: left;
+    width: 520px;
+    max-width: 90vw;
 }
 
-/* Form wrapper — aligns privacy link under the button */
+/* Form wrapper */
 .form-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     width: 520px;
     max-width: 90vw;
 }
@@ -76,9 +77,16 @@ h1 {
     color: #555;
 }
 
-.signup-form button {
+/* Button + privacy link stacked, joined to input */
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-shrink: 0;
-    margin-left: -3px;
+    margin-left: 0;
+}
+
+.signup-form button {
     height: 64px;
     padding: 0 36px;
     background: #000;
@@ -98,14 +106,18 @@ h1 {
     background: #222;
 }
 
-/* Privacy Policy — small, right-aligned under Submit */
+/* Privacy Policy — no underline, centered under Submit, blue on hover */
 .privacy-link {
-    margin-top: 7px;
-    font-size: 12px;
+    margin-top: 6px;
+    font-size: 11px;
     font-weight: 400;
     color: #555;
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.privacy-link:hover {
+    color: #0066cc;
 }
 
 /*
@@ -149,7 +161,8 @@ h1 {
     }
 
     h1 {
-        font-size: 34px;
+        font-size: 26px;
+        width: 90vw;
     }
 
     .signup-form input {
