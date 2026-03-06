@@ -88,24 +88,79 @@ h1 {
     margin-left: -3px;
 }
 
-.signup-form button {
+/* ── Flip button ─────────────────────────────────── */
+.btn-flip-root {
     height: 64px;
+    perspective: 800px;
+}
+
+.btn-flip-inner {
+    display: grid;          /* both faces in the same cell → auto-sizes to content */
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.btn-flip-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.btn-face {
+    grid-area: 1 / 1;
+    height: 100%;
     padding: 0 36px;
+    border-radius: 50px;
+    border: 3px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.btn-face-front {
     background: #000;
     color: #fff;
-    border: 3px solid #000;
-    border-radius: 50px;
     font-family: "barlow", sans-serif;
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
     position: relative;
-    z-index: 1;
-    transition: background 0.15s;
 }
 
-.signup-form button:hover {
-    background: #222;
+.btn-face-back {
+    background: #e8000d;
+    color: #fff;
+    border-color: #e8000d;
+    font-family: "barlow", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    transform: rotateY(180deg);
+    cursor: default;
+}
+
+/* Red fill — sweeps left→right on hover */
+.fill-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: #e8000d;
+    border-radius: 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.btn-flip-root:hover .fill-bar {
+    width: 100%;
+    transition: width 1.5s linear;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 1;
 }
 
 /* Privacy Policy — no underline, centered under Submit, blue on hover */

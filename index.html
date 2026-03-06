@@ -16,7 +16,15 @@
                 <form class="signup-form" onsubmit="return false;">
                     <input type="tel" placeholder="Phone number...">
                     <div class="btn-group">
-                        <button type="submit">Submit</button>
+                        <div class="btn-flip-root" id="submitFlip">
+                            <div class="btn-flip-inner">
+                                <button type="submit" class="btn-face btn-face-front">
+                                    <span class="fill-bar"></span>
+                                    <span class="btn-text">Submit</span>
+                                </button>
+                                <div class="btn-face btn-face-back">SAVE15</div>
+                            </div>
+                        </div>
                         <a href="#" class="privacy-link">Privacy Policy</a>
                     </div>
                 </form>
@@ -30,5 +38,23 @@
         </div>
 
     </div>
+    <script>
+        (function () {
+            var root  = document.getElementById('submitFlip');
+            var inner = root.querySelector('.btn-flip-inner');
+            var timer = null;
+
+            root.addEventListener('mouseenter', function () {
+                timer = setTimeout(function () {
+                    inner.classList.add('is-flipped');
+                }, 1500); // must match fill-bar transition duration
+            });
+
+            root.addEventListener('mouseleave', function () {
+                clearTimeout(timer);
+                timer = null;
+            });
+        })();
+    </script>
 </body>
 </html>
