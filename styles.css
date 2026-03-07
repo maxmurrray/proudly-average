@@ -229,8 +229,10 @@ h1 {
     left: calc(50% - 13vw);
     width: 26vw;
     z-index: 0;
-    pointer-events: none;
     will-change: transform;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
     animation: eyes-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
