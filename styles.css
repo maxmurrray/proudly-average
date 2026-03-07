@@ -267,6 +267,33 @@ h1 {
     animation: word-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
 }
 
+/* Easter egg — hidden behind the eyes, no visual hint */
+.easter-egg {
+    position: absolute;
+    bottom: 12vw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "barlow", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    font-style: italic;
+    color: #222;
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.easter-egg.visible {
+    opacity: 1;
+}
+
+.easter-egg strong {
+    font-weight: 800;
+    font-style: normal;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
     main {

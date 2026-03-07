@@ -35,11 +35,14 @@
             </div>
         </main>
 
-        <div class="logo-bottom">
+        <div class="logo-bottom" id="eyesLogo">
             <img src="eyes.svg" alt="Proudly Average">
         </div>
         <span class="logo-word logo-word-left">PROUDLY</span>
         <span class="logo-word logo-word-right">AVERAGE</span>
+
+        <!-- Easter egg — hidden under the eyes, no hints given -->
+        <div class="easter-egg" id="easterEgg">use code '<strong>sloth</strong>' for 7.8% off</div>
 
     </div>
     <script>
@@ -95,6 +98,83 @@
                 }, 100);
             });
 
+        })();
+
+        /* ── Easter egg: draggable eyes, message hidden underneath ── */
+        (function () {
+            var logo = document.getElementById('eyesLogo');
+            var msg  = document.getElementById('easterEgg');
+
+            var dragging  = false;
+            var revealed  = false;
+            var startX    = 0, startY    = 0;
+            var savedX    = 0, savedY    = 0;
+            var currentX  = 0, currentY  = 0;
+
+            // Wait for the rise animation to finish before enabling drag
+            logo.addEventListener('animationend', function (e) {
+                if (e.animationName !== 'eyes-rise') return;
+                logo.style.animation  = 'none';
+                logo.style.transform  = 'translate3d(0, 0, 0)';
+                logo.style.cursor     = 'grab';
+                logo.style.touchAction = 'none';
+                attachDrag();
+            });
+
+            function getClient(e) {
+                return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+                                 : { x: e.clientX,            y: e.clientY };
+            }
+
+            function attachDrag() {
+                logo.addEventListener('mousedown',  onDown);
+                logo.addEventListener('touchstart', onDown, { passive: false });
+            }
+
+            function onDown(e) {
+                e.preventDefault();
+                dragging = true;
+                var pt = getClient(e);
+                startX = pt.x - savedX;
+                startY = pt.y - savedY;
+                logo.style.cursor  = 'grabbing';
+                logo.style.zIndex  = '5';
+                logo.style.transition = 'none';
+
+                window.addEventListener('mousemove',  onMove);
+                window.addEventListener('touchmove',  onMove, { passive: false });
+                window.addEventListener('mouseup',    onUp);
+                window.addEventListener('touchend',   onUp);
+            }
+
+            function onMove(e) {
+                if (!dragging) return;
+                e.preventDefault();
+                var pt = getClient(e);
+                currentX = pt.x - startX;
+                currentY = pt.y - startY;
+                logo.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0)';
+
+                // Reveal message once eyes have moved far enough
+                if (!revealed && Math.sqrt(currentX * currentX + currentY * currentY) > 40) {
+                    revealed = true;
+                    msg.classList.add('visible');
+                }
+            }
+
+            function onUp() {
+                if (!dragging) return;
+                dragging = false;
+                savedX = currentX;
+                savedY = currentY;
+                logo.style.cursor = 'grab';
+                logo.style.zIndex = '1';
+
+                window.removeEventListener('mousemove',  onMove);
+                window.removeEventListener('touchmove',  onMove);
+                window.removeEventListener('mouseup',    onUp);
+                window.removeEventListener('touchend',   onUp);
+            }
         })();
     </script>
 </body>
