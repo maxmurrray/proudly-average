@@ -165,14 +165,18 @@ h1 {
     z-index: 1;
 }
 
-/* Checkmark — hidden until submit fires */
+/* Checkmark — hidden until submit fires, centered in the collapsed circle */
 .check-icon {
     display: none;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 26px;
     height: 26px;
     z-index: 2;
     pointer-events: none;
+    overflow: visible;
 }
 
 /* Privacy Policy — no underline, centered under Submit, blue on hover */

@@ -43,67 +43,78 @@
     </div>
     <script>
         (function () {
+            var flipRoot  = document.getElementById('submitFlip');
+            var flipInner = flipRoot.querySelector('.btn-flip-inner');
+            var frontFace = flipRoot.querySelector('.btn-face-front');
+            var btnText   = flipRoot.querySelector('.btn-text');
+            var fillBar   = flipRoot.querySelector('.fill-bar');
+            var checkIcon = flipRoot.querySelector('.check-icon');
+            var checkPath = flipRoot.querySelector('.check-path');
+            var timer     = null;
+            var submitted = false;
 
             /* ── Promo flip (desktop hover only) ─────────────────── */
             if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                var root  = document.getElementById('submitFlip');
-                var inner = root.querySelector('.btn-flip-inner');
-                var timer = null;
-
-                root.addEventListener('mouseenter', function () {
+                flipRoot.addEventListener('mouseenter', function () {
+                    if (submitted) return;
                     timer = setTimeout(function () {
-                        inner.classList.add('is-flipped');
+                        flipInner.classList.add('is-flipped');
                     }, 1500);
                 });
-
-                root.addEventListener('mouseleave', function () {
-                    clearTimeout(timer);
-                    timer = null;
+                flipRoot.addEventListener('mouseleave', function () {
+                    clearTimeout(timer); timer = null;
                 });
             }
 
-            /* ── Submit: collapse → green circle → draw checkmark ── */
+            /* ── Submit: bubble pop → collapse → green → checkmark ── */
             document.getElementById('signupForm').addEventListener('submit', function (e) {
                 e.preventDefault();
+                if (submitted) return;
+                submitted = true;
 
-                var flipRoot  = document.getElementById('submitFlip');
-                var frontFace = flipRoot.querySelector('.btn-face-front');
-                var btnText   = flipRoot.querySelector('.btn-text');
-                var fillBar   = flipRoot.querySelector('.fill-bar');
-                var checkIcon = flipRoot.querySelector('.check-icon');
-                var checkPath = flipRoot.querySelector('.check-path');
+                // Kill any flip in progress, reset to front face
+                clearTimeout(timer);
+                flipInner.style.transition = 'none';
+                flipInner.classList.remove('is-flipped');
+                void flipInner.offsetWidth;
 
-                // Compute checkmark path length for stroke animation
-                var pathLen = checkPath.getTotalLength();
-                checkPath.style.strokeDasharray  = pathLen;
-                checkPath.style.strokeDashoffset = pathLen;
+                // --- 1. BUBBLE POP: scale up like a bubble ---
+                flipRoot.style.transition = 'transform 0.12s ease-out';
+                flipRoot.style.transform  = 'scale(1.1)';
 
-                // Freeze explicit width so CSS transition can animate from it
-                var w = flipRoot.offsetWidth;
-                var h = flipRoot.offsetHeight;
-                flipRoot.style.width = w + 'px';
-                void flipRoot.offsetWidth; // force reflow
-
-                // Step 1 — collapse width to a circle (fast: 220ms)
-                flipRoot.style.transition = 'width 0.22s cubic-bezier(0.4, 0, 0.2, 1)';
-                flipRoot.style.width = h + 'px';
-
-                // Step 2 — flip green + hide text
                 setTimeout(function () {
-                    frontFace.style.transition = 'background 0.15s, border-color 0.15s';
-                    frontFace.style.background  = '#22c55e';
-                    frontFace.style.borderColor = '#22c55e';
-                    btnText.style.display  = 'none';
-                    fillBar.style.display  = 'none';
+                    // --- 2. COLLAPSE: shrink width down to a circle ---
+                    var w = flipRoot.offsetWidth;
+                    var h = flipRoot.offsetHeight;
+                    flipRoot.style.width = w + 'px';
+                    void flipRoot.offsetWidth;
 
-                    // Step 3 — draw the checkmark
+                    flipRoot.style.transition = 'transform 0.2s ease-in, width 0.28s cubic-bezier(0.55, 0, 1, 0.45)';
+                    flipRoot.style.transform  = 'scale(1)';
+                    flipRoot.style.width      = h + 'px';
+                    btnText.style.opacity     = '0';
+
                     setTimeout(function () {
-                        checkIcon.style.display = 'block';
-                        checkPath.style.transition = 'stroke-dashoffset 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
-                        checkPath.style.strokeDashoffset = '0';
-                    }, 150);
+                        // --- 3. TURN GREEN ---
+                        fillBar.style.display      = 'none';
+                        btnText.style.display      = 'none';
+                        frontFace.style.transition = 'background 0.15s ease, border-color 0.15s ease';
+                        frontFace.style.background  = '#22c55e';
+                        frontFace.style.borderColor = '#22c55e';
 
-                }, 220);
+                        setTimeout(function () {
+                            // --- 4. DRAW CHECKMARK ---
+                            var len = checkPath.getTotalLength ? checkPath.getTotalLength() : 22;
+                            checkPath.style.strokeDasharray  = len;
+                            checkPath.style.strokeDashoffset = len;
+                            checkIcon.style.display = 'block';
+                            void checkIcon.offsetWidth;
+                            checkPath.style.transition       = 'stroke-dashoffset 0.45s cubic-bezier(0.2, 0.8, 0.4, 1)';
+                            checkPath.style.strokeDashoffset = '0';
+                        }, 130);
+
+                    }, 260);
+                }, 110);
             });
 
         })();
