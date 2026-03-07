@@ -90,6 +90,7 @@ h1 {
 
 /* ── Flip button ─────────────────────────────────── */
 .btn-flip-root {
+    position: relative;
     height: 64px;
     perspective: 800px;
 }
@@ -165,16 +166,16 @@ h1 {
     z-index: 1;
 }
 
-/* Checkmark — hidden until submit fires, centered in the collapsed circle */
+/* Checkmark — floats centered over the button, no background at all */
 .check-icon {
     display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 26px;
-    height: 26px;
-    z-index: 2;
+    width: 36px;
+    height: 36px;
+    z-index: 10;
     pointer-events: none;
     overflow: visible;
 }
