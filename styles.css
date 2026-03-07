@@ -313,6 +313,6 @@ h1 {
     }
 
     .logo-word-right {
-        left: calc(50% + 21vw + 2vw);
+        left: calc(50% + 21vw + 2vw - 3px);
     }
 }
