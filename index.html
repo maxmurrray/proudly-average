@@ -50,16 +50,28 @@
 
     </div>
     <script>
-        /* ── Submit: simple press + "Sent." ─────────────────────── */
+        /* ── Submit: save to Google Sheets ──────────────────────── */
         (function () {
-            var btn  = document.getElementById('submitBtn');
-            var done = false;
+            var btn    = document.getElementById('submitBtn');
+            var input  = document.querySelector('input[type="tel"]');
+            var done   = false;
+            var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzRZDyalkv_GpBU5Ww4FVr6eRxHWRcHViRbCrHMu8uf9EF5Nyy6ai_n_Z2PrY4lAjbj/exec';
 
             document.getElementById('signupForm').addEventListener('submit', function (e) {
                 e.preventDefault();
                 if (done) return;
+                var phone = input ? input.value.trim() : '';
+                if (!phone) return;
                 done = true;
                 btn.classList.add('pressed');
+
+                fetch(SHEET_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone }),
+                    mode: 'no-cors'
+                }).catch(function () {});
+
                 setTimeout(function () { btn.textContent = 'Sent.'; }, 80);
             });
         })();
