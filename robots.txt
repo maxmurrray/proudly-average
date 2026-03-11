@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://proudlyaverage.com/sitemap.xml
