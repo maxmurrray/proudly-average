@@ -40,7 +40,7 @@ h1 {
     font-size: 18px;
     font-weight: 700;
     margin-top: 7px;
-    margin-bottom: -55px;
+    margin-bottom: -100px;
     position: relative;
     z-index: 3;
     text-align: center;
@@ -163,7 +163,7 @@ h1 {
     bottom: 0;
     left: calc(50% - 13vw);
     width: 26vw;
-    z-index: 0;
+    z-index: 4;
     will-change: transform;
     touch-action: none;
     -webkit-user-select: none;
@@ -181,7 +181,7 @@ h1 {
 .logo-word {
     position: absolute;
     bottom: 1vw;
-    z-index: 0;
+    z-index: 4;
     pointer-events: none;
     will-change: transform;
     font-family: "barlow", sans-serif;
