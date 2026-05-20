@@ -33,14 +33,16 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 16vh;
+    padding-top: 8vh;
 }
 
 h1 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-top: 7px;
-    margin-bottom: -100px;
+    font-size: clamp(56px, 14vw, 150px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-top: 0;
+    margin-bottom: -40px;
     position: relative;
     z-index: 3;
     text-align: center;
@@ -234,13 +236,13 @@ h1 {
 /* Mobile */
 @media (max-width: 600px) {
     main {
-        padding-top: 18vh;
+        padding-top: 5vh;
     }
 
     h1 {
-        font-size: 14px;
+        font-size: clamp(80px, 20vw, 120px);
         width: 90vw;
-        margin-bottom: -85px;
+        margin-bottom: -30px;
     }
 
     .signup-form input {
