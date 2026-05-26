@@ -118,8 +118,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #444;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration: none;
   padding: 6px 2px;
   -webkit-tap-highlight-color: transparent;
   transition: color 0.2s ease;
