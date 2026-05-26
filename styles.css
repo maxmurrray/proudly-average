@@ -249,6 +249,9 @@ body.about {
   top: 50%;
   left: 50%;
   transform: translate(-50%, calc(-50% + 57px));
+  /* Container never needs events — children handle their own, and this
+     prevents the wrapper's bounding box from blocking nav link clicks. */
+  pointer-events: none;
 }
 
 /* Raise the stage above .cal-add (z-index: 2) once spread so the flying
@@ -262,6 +265,7 @@ body.about {
   width: 100%;
   height: 100%;
   cursor: default;
+  pointer-events: none;
 }
 
 /* ---------- Stacked PNG (initial) ----------
@@ -277,6 +281,7 @@ body.about {
   height: 100%;
   object-fit: contain;
   cursor: pointer;
+  pointer-events: auto;
   clip-path: polygon(
     37% 22%,   /* top-left of cap crown */
     63% 22%,   /* top-right of cap crown */
