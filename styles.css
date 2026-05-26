@@ -248,7 +248,7 @@ body.about {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, calc(-50% + 12px));
+  transform: translate(-50%, calc(-50% + 57px));
 }
 
 /* Raise the stage above .cal-add (z-index: 2) once spread so the flying
