@@ -1,128 +1,335 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proudly Average — Something's Coming</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/favicon.png">
-
-    <!-- OG / Social preview -->
-    <meta property="og:title" content="Proudly Average">
-    <meta property="og:description" content="Something's coming. Stay in the loop.">
-    <meta property="og:image" content="https://proudlyaverage.com/og-image.png">
-    <link rel="canonical" href="https://proudlyaverage.com">
-    <meta property="og:url" content="https://proudlyaverage.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://proudlyaverage.com/og-image.png">
-    <meta name="twitter:title" content="Proudly Average">
-
-    <link rel="stylesheet" href="https://use.typekit.net/wfh3dbx.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proudly Average — Product Spread Test</title>
+  <link rel="stylesheet" href="https://use.typekit.net/wfh3dbx.css">
+  <link rel="stylesheet" href="styles.css?v=17">
 </head>
 <body>
-    <div class="page">
+  <main class="layout">
+    <nav class="top-nav">
+      <a href="about.html" class="nav-link">About Us</a>
+    </nav>
 
-        <main>
-            <h1>5.29.26</h1>
-            <div class="form-wrapper">
-                <iframe src="https://emotivecdn.io/embedded/index.html?id=2050db38-1d66-11f1-824c-0a58a9feac02&brand_id=43752&api=https%3A%2F%2Fwww.emotiveapp.co" title="Emotive Embedded for Email and SMS Marketing" style="width:100%;height:400px;border:none;box-sizing:border-box;"></iframe>
-            </div>
-        </main>
-
-        <div class="logo-bottom" id="eyesLogo">
-            <img src="eyes.svg" alt="Proudly Average">
-        </div>
-        <span class="logo-word logo-word-left">PROUDLY</span>
-        <span class="logo-word logo-word-right">AVERAGE</span>
-
-        <!-- Easter egg — hidden under the eyes, no hints given -->
-        <div class="easter-egg" id="easterEgg">deffffinitely shouldn't stay in the loop…</div>
-
+    <div class="countdown" id="countdown" aria-live="polite">
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-days">--</span>
+        <span class="cd-label">DAYS</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-hours">--</span>
+        <span class="cd-label">HRS</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-mins">--</span>
+        <span class="cd-label">MIN</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-secs">--</span>
+        <span class="cd-label">SEC</span>
+      </div>
     </div>
-    <script>
-        /* ── Easter egg: draggable eyes, message hidden underneath ── */
-        (function () {
-            var logo = document.getElementById('eyesLogo');
-            var msg  = document.getElementById('easterEgg');
 
-            var dragging    = false;
-            var revealed    = false;
-            var dragEnabled = false;
-            var startX = 0, startY = 0;
-            var savedX = 0, savedY = 0;
-            var currentX = 0, currentY = 0;
+    <div class="cal-add">
+      <a class="cal-add-link" id="cal-add-link"
+         href="#" target="_blank" rel="noopener noreferrer">Mark your calendar</a>
+    </div>
 
-            function enableDrag() {
-                if (dragEnabled) return;
-                dragEnabled = true;
-                logo.style.animation        = 'none';
-                logo.style.transform        = 'translate3d(0,0,0)';
-                logo.style.cursor           = 'grab';
-                logo.style.touchAction      = 'none';
-                logo.style.userSelect       = 'none';
-                logo.style.webkitUserSelect = 'none';
-            }
+    <div class="stage-wrap">
+      <div class="stage" id="stage" role="button" tabindex="0" aria-label="Spread products">
+        <img class="stacked"
+             src="assets/all-products-stacked.png"
+             alt="Stacked products">
 
-            logo.addEventListener('animationend', function (e) {
-                if (e.animationName === 'eyes-rise') enableDrag();
-            });
-            setTimeout(enableDrag, 1100);
+        <a class="product hoodie" href="#" aria-label="Average Hoodie">
+          <img src="assets/hoodie.png" alt="">
+        </a>
+        <a class="product cap" href="#" aria-label="Average Cap">
+          <img src="assets/hat.png" alt="">
+        </a>
+        <a class="product pants" href="#" aria-label="Average Sweatpants">
+          <img src="assets/sweats.png" alt="">
+        </a>
+        <a class="product tee-dark" href="#" aria-label="Billiards Tee">
+          <img src="assets/billiards-tee.png" alt="">
+        </a>
+        <a class="product tee-white" href="#" aria-label="Run Club Tee">
+          <img src="assets/run-club-tee.png" alt="">
+        </a>
+      </div>
+    </div>
+  </main>
 
-            function getClient(e) {
-                var src = e.touches ? e.touches[0] : e;
-                return { x: src.clientX, y: src.clientY };
-            }
+  <section class="signup" aria-label="Sign up for text updates">
+    <iframe src="https://emotivecdn.io/embedded/index.html?id=2050db38-1d66-11f1-824c-0a58a9feac02&brand_id=43752&api=https%3A%2F%2Fwww.emotiveapp.co" title="Emotive Embedded for Email and SMS Marketing" style="width:100%;height:320px;border:none;box-sizing:border-box;"></iframe>
+  </section>
 
-            function onDown(e) {
-                if (!dragEnabled) return;
-                e.preventDefault();
-                dragging = true;
-                var pt = getClient(e);
-                startX = pt.x - savedX;
-                startY = pt.y - savedY;
-                logo.style.cursor     = 'grabbing';
-                logo.style.zIndex     = '5';
-                logo.style.transition = 'none';
-                window.addEventListener('mousemove', onMove);
-                window.addEventListener('touchmove', onMove, { passive: false });
-                window.addEventListener('mouseup',   onUp);
-                window.addEventListener('touchend',  onUp);
-            }
+  <!-- ===================== Easter egg: vault =====================
+       Triggered when the five products are restacked in the order:
+         pants (bottom) → hoodie → tee-dark → tee-white → cap (top)
+       The check looks for: (a) all five item centers within 80px of each
+       other, and (b) z-index strictly ascending in that sequence. The
+       cap must be the last item dragged. ============================ -->
+  <div id="vault" class="vault" aria-hidden="true" role="dialog" aria-labelledby="vault-code">
+    <div class="vault-stage">
+      <div class="vault-reveal">
+        <p class="vault-eyebrow">VAULT UNLOCKED</p>
+        <p class="vault-code" id="vault-code">AVERAGE2026</p>
+        <p class="vault-desc">20% off your purchase</p>
+        <div class="vault-actions">
+          <button type="button" class="vault-btn" id="vault-copy">Copy code</button>
+          <button type="button" class="vault-btn vault-btn--ghost" id="vault-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            function onMove(e) {
-                if (!dragging) return;
-                e.preventDefault();
-                var pt = getClient(e);
-                currentX = pt.x - startX;
-                currentY = pt.y - startY;
-                logo.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0)';
-                if (!revealed && Math.sqrt(currentX * currentX + currentY * currentY) > 40) {
-                    revealed = true;
-                    msg.classList.add('visible');
-                }
-            }
+  <script>
+    /* ---------- Drop event metadata ---------- */
+    const DROP_TITLE = 'Proudly Average Drop';
+    const DROP_DESC  = 'The Proudly Average drop goes live.';
+    const DROP_START_UTC = '20260529T160000Z'; // 12:00 PM EDT
+    const DROP_END_UTC   = '20260529T170000Z'; // 1 hr block
 
-            function onUp() {
-                if (!dragging) return;
-                dragging = false;
-                savedX = currentX;
-                savedY = currentY;
-                logo.style.cursor = 'grab';
-                logo.style.zIndex = '5';
-                window.removeEventListener('mousemove', onMove);
-                window.removeEventListener('touchmove', onMove);
-                window.removeEventListener('mouseup',   onUp);
-                window.removeEventListener('touchend',  onUp);
-            }
+    /* ---------- Countdown to drop ----------
+       Target: 2026-05-29 12:00 PM EDT (UTC-4) = 16:00 UTC. */
+    const TARGET = new Date('2026-05-29T16:00:00Z').getTime();
+    const pad = (n) => String(n).padStart(2, '0');
+    const cd = {
+      d: document.getElementById('cd-days'),
+      h: document.getElementById('cd-hours'),
+      m: document.getElementById('cd-mins'),
+      s: document.getElementById('cd-secs'),
+    };
+    function tick() {
+      const diff = Math.max(0, TARGET - Date.now());
+      const sec = Math.floor(diff / 1000);
+      cd.d.textContent = pad(Math.floor(sec / 86400));
+      cd.h.textContent = pad(Math.floor((sec % 86400) / 3600));
+      cd.m.textContent = pad(Math.floor((sec % 3600) / 60));
+      cd.s.textContent = pad(sec % 60);
+      if (diff > 0) setTimeout(tick, 1000 - (Date.now() % 1000));
+    }
+    tick();
 
-            logo.addEventListener('mousedown',  onDown);
-            logo.addEventListener('touchstart', onDown, { passive: false });
-        })();
-    </script>
+    /* ---------- Mark your calendar (Google) ---------- */
+    const gParams = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: DROP_TITLE,
+      dates: DROP_START_UTC + '/' + DROP_END_UTC,
+      details: DROP_DESC,
+    });
+    document.getElementById('cal-add-link').href =
+      'https://calendar.google.com/calendar/render?' + gParams.toString();
+
+    const stage = document.getElementById('stage');
+    const stacked = stage.querySelector('.stacked');
+    const products = document.querySelectorAll('.product');
+
+    const spread = () => {
+      if (stage.classList.contains('spread')) return;
+      stage.classList.add('spread');
+      // Push a history entry so the browser back button can revert.
+      history.pushState({ spread: true }, '');
+    };
+
+    const restack = () => {
+      stage.classList.remove('spread');
+      // Reset any inline top/left/z-index left over from dragging.
+      products.forEach((p) => {
+        p.style.left = '';
+        p.style.top = '';
+        p.style.zIndex = '';
+      });
+    };
+
+    // Click on the stack → spread. The clip-path on .stacked restricts the
+    // hit area to the silhouette of the clothing.
+    stacked.addEventListener('click', spread);
+    stage.addEventListener('keydown', (e) => {
+      if (stage.classList.contains('spread')) return;
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); spread(); }
+    });
+
+    // Browser back (popstate) → restack. The state we pushed on spread is
+    // popped off when the user hits back, leaving the original page state.
+    window.addEventListener('popstate', () => {
+      if (stage.classList.contains('spread')) restack();
+    });
+
+    /* ---------- Drag the spread products ----------
+       Each product can be picked up (pointerdown) and dragged. Movement
+       under DRAG_THRESHOLD is treated as a click (anchor navigation still
+       works). Once a real drag happens, the click that follows pointerup
+       is suppressed so a drag doesn't navigate. */
+    const DRAG_THRESHOLD = 5;
+    let topZ = 10;
+
+    document.querySelectorAll('.product').forEach((product) => {
+      let startX = 0, startY = 0;
+      let offsetX = 0, offsetY = 0;
+      let pointerActive = false;
+      let dragging = false;
+
+      product.addEventListener('pointerdown', (e) => {
+        // Only draggable in the spread state, and ignore secondary buttons
+        if (!stage.classList.contains('spread')) return;
+        if (e.button !== undefined && e.button !== 0) return;
+
+        const productRect = product.getBoundingClientRect();
+        startX = e.clientX;
+        startY = e.clientY;
+        offsetX = e.clientX - productRect.left;
+        offsetY = e.clientY - productRect.top;
+        pointerActive = true;
+        dragging = false;
+        product.setPointerCapture(e.pointerId);
+      });
+
+      product.addEventListener('pointermove', (e) => {
+        if (!pointerActive) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        if (!dragging && Math.hypot(dx, dy) > DRAG_THRESHOLD) {
+          dragging = true;
+          product.classList.add('dragging');
+          document.body.classList.add('is-dragging');
+          product.style.zIndex = String(++topZ);
+        }
+
+        if (dragging) {
+          const stageRect = stage.getBoundingClientRect();
+          const newLeft = e.clientX - stageRect.left - offsetX;
+          const newTop  = e.clientY - stageRect.top  - offsetY;
+          product.style.left = newLeft + 'px';
+          product.style.top  = newTop  + 'px';
+        }
+      });
+
+      const endDrag = (e) => {
+        if (!pointerActive) return;
+        pointerActive = false;
+        try { product.releasePointerCapture(e.pointerId); } catch {}
+
+        if (dragging) {
+          product.classList.remove('dragging');
+          document.body.classList.remove('is-dragging');
+          // Swallow the click that follows so a drag doesn't navigate.
+          product.addEventListener('click', suppressOnce, { capture: true, once: true });
+          // After each completed drag, check if the easter-egg stack is in place.
+          maybeUnlockVault();
+        }
+        dragging = false;
+      };
+
+      product.addEventListener('pointerup', endDrag);
+      product.addEventListener('pointercancel', endDrag);
+
+      // Don't let the browser hijack the gesture with native image drag
+      product.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    function suppressOnce(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    /* ===================== Vault easter egg =====================
+       Bottom-to-top target order. The z-index check is "strictly
+       ascending" in this sequence, so the cap must be the most-
+       recently dragged item. */
+    const STACK_ORDER = ['pants', 'hoodie', 'tee-dark', 'tee-white', 'cap'];
+    const STACK_TOL = 80;
+    let vaultUnlocked = false;
+
+    function maybeUnlockVault() {
+      if (vaultUnlocked) return;
+      if (!stage.classList.contains('spread')) return;
+
+      const items = STACK_ORDER.map((cls) => stage.querySelector('.product.' + cls));
+      if (items.some((el) => !el)) return;
+
+      const centers = items.map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          x: r.left + r.width / 2,
+          y: r.top + r.height / 2,
+          z: parseInt(el.style.zIndex || '10', 10),
+        };
+      });
+
+      // 1) All five centers within STACK_TOL of each other (max pairwise).
+      for (let i = 0; i < centers.length - 1; i++) {
+        for (let j = i + 1; j < centers.length; j++) {
+          const dx = centers[i].x - centers[j].x;
+          const dy = centers[i].y - centers[j].y;
+          if (Math.hypot(dx, dy) > STACK_TOL) return;
+        }
+      }
+
+      // 2) z-order strictly ascending: pants < hoodie < tee-dark < tee-white < cap
+      for (let i = 1; i < centers.length; i++) {
+        if (centers[i].z <= centers[i - 1].z) return;
+      }
+
+      openVault();
+    }
+
+    const vault = document.getElementById('vault');
+    const vaultCopyBtn = document.getElementById('vault-copy');
+    const vaultCloseBtn = document.getElementById('vault-close');
+
+    function openVault() {
+      vaultUnlocked = true;
+      vault.classList.add('open');
+      vault.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeVault() {
+      vault.classList.remove('open');
+      vault.setAttribute('aria-hidden', 'true');
+      // Reset the copy button label in case it's still showing "Copied!".
+      vaultCopyBtn.textContent = 'Copy code';
+      vaultCopyBtn.classList.remove('copied');
+      // Allow replay by re-stacking — flip the flag after the fade-out completes.
+      setTimeout(() => { vaultUnlocked = false; }, 600);
+    }
+
+    vaultCopyBtn.addEventListener('click', async () => {
+      const code = 'AVERAGE2026';
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch {
+        // Older-browser fallback.
+        const t = document.createElement('textarea');
+        t.value = code;
+        t.style.position = 'fixed';
+        t.style.opacity = '0';
+        document.body.appendChild(t);
+        t.select();
+        try { document.execCommand('copy'); } catch {}
+        document.body.removeChild(t);
+      }
+      vaultCopyBtn.classList.add('copied');
+      vaultCopyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        vaultCopyBtn.classList.remove('copied');
+        vaultCopyBtn.textContent = 'Copy code';
+      }, 1800);
+    });
+
+    vaultCloseBtn.addEventListener('click', closeVault);
+
+    // Escape key also closes the vault when open.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && vault.classList.contains('open')) closeVault();
+    });
+  </script>
 </body>
 </html>

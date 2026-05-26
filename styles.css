@@ -1,281 +1,561 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ---------- Page ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-    height: 100%;
-    height: 100dvh;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  color: #111;
 }
 
 body {
-    font-family: "barlow", sans-serif;
-    background: #fff;
-    color: #000;
+  display: block;
 }
 
-/* Full-viewport container — clips the logo at the bottom edge */
-.page {
-    position: relative;
-    height: 100vh;
-    height: 100dvh; /* mobile: excludes browser chrome so bottom:0 is truly visible */
-    overflow: hidden;
-    background: #fff;
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Top nav ----------
+   Sits directly above the stack as a small editorial link. The .layout
+   flex column groups it with the stage so they're centered together. */
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  /* Hero: fills the viewport. .stage-wrap is absolute and positions
+     itself against this container, not the document — so the stack
+     stays centered in the hero while the SMS sign-up sits below. */
+  height: 100vh;
+  position: relative;
 }
 
-/* Content sits above the logo */
-main {
-    position: relative;
-    z-index: 2;
+.top-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+  /* Sit above the absolute-positioned .stage-wrap so the About Us
+     link is clickable; otherwise the stage's bounding box (which is
+     ~100vh tall) intercepts the click. */
+  position: relative;
+  z-index: 2;
+}
+
+.nav-link {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #444;
+  padding: 6px 2px;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover { color: #c9342c; }
+
+/* ---------- Countdown ----------
+   Barlow bold numerals above the stack. Each digit pair + its label sit
+   in the same flex column (.cd-unit), so labels are always centered under
+   their numbers regardless of digit width. Colons (.cd-sep) sit between
+   columns, aligned to the top so they line up with the numbers, not the
+   labels. */
+.countdown {
+  font-family: "barlow", sans-serif;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  color: #111;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  /* Same reason as .top-nav — sit above the stage-wrap. */
+  position: relative;
+  z-index: 2;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cd-num {
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  min-width: 1.6ch;
+  text-align: center;
+}
+
+.cd-sep {
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.35;
+}
+
+.cd-label {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #666;
+}
+
+/* ---------- Mark your calendar ----------
+   Subtle underlined link under the countdown that opens the event in
+   Google Calendar in a new tab. */
+.cal-add {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.cal-add-link {
+  font-family: "barlow", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #444;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 6px 2px;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s ease;
+}
+
+.cal-add-link:hover { color: #111; }
+
+/* ---------- SMS sign-up ----------
+   Section below the hero containing the Emotive embed iframe. */
+.signup {
+  display: flex;
+  justify-content: center;
+  padding: 12px 24px 16px;
+  background: #fff;
+}
+
+.signup iframe {
+  max-width: 480px;
+}
+
+/* ---------- About page ----------
+   The about page reuses the same body / nav. Its <body class="about">
+   switches the body to a scrollable column with a centered text article. */
+body.about {
+  display: block;
+  overflow: auto;
+  background: #fff;
+  color: #1a1a1a;
+  font-family: "barlow", sans-serif;
+}
+
+/* About-page nav — left-align the Back link with the article column
+   and pull it close to the top so the first heading sits high on the
+   page. Overrides .top-nav's shared centering + 56px top margin. */
+.about .top-nav {
+  max-width: 640px;
+  margin: 0 auto 16px;
+  padding: 16px 24px 0;
+  justify-content: flex-start;
+}
+
+.about-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+/* Mobile-only second Back link, anchored to the bottom-left of the
+   article column so readers don't have to scroll back to the top. */
+.about-back-bottom {
+  display: none;
+  margin-top: 40px;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .about-back-bottom {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 8vh;
+  }
 }
 
-h1 {
-    font-size: clamp(56px, 14vw, 150px);
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin-top: 0;
-    margin-bottom: -40px;
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    width: 520px;
-    max-width: 90vw;
+.about-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  margin: 48px 0 20px;
+  color: #111;
 }
 
-/* Form wrapper */
-.form-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 520px;
-    max-width: 90vw;
+.about-content h2:first-of-type { margin-top: 0; }
+
+.about-content p {
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0 0 18px;
+  color: #2a2a2a;
 }
 
-/* Input + button side by side, button overlaps input right edge */
-.signup-form {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
+.about-content .lede {
+  font-size: 19px;
+  font-style: italic;
+  color: #111;
+  margin-bottom: 24px;
 }
 
-.signup-form input {
-    flex: 1;
-    height: 64px;
-    border: 3px solid #000;
-    border-radius: 50px;
-    padding: 0 28px;
-    font-family: "barlow", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    color: #000;
-    outline: none;
-    background: #fff;
-    min-width: 0;
+.about-content .signature {
+  font-style: italic;
+  color: #555;
+  margin-top: 32px;
 }
 
-.signup-form input::placeholder {
-    font-weight: 100;
-    color: #555;
+/* ---------- Shadow tokens ----------
+   Two-layer drop-shadow modeled on studio flat-lay product photography:
+   a small soft "contact" shadow plus a larger diffuse "ambient" shadow.
+   The light source reads from the upper-left, so both shadows offset down
+   and slightly right. The hover variant lifts and lengthens both layers. */
+:root {
+  --shadow-rest:
+    drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.08))
+    drop-shadow(4px 10px 18px rgba(0, 0, 0, 0.07));
+
+  --shadow-hover:
+    drop-shadow(2px 6px 8px rgba(0, 0, 0, 0.10))
+    drop-shadow(8px 22px 36px rgba(0, 0, 0, 0.10));
+
+  /* Stacked PNG is larger and visually heavier — slightly bigger shadow.
+     X offset zeroed so the shadow sits directly underneath, not to the right. */
+  --shadow-rest-stack:
+    drop-shadow(0 4px 6px rgba(0, 0, 0, 0.09))
+    drop-shadow(0 16px 28px rgba(0, 0, 0, 0.08));
+
+  --shadow-hover-stack:
+    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.11))
+    drop-shadow(0 28px 44px rgba(0, 0, 0, 0.11));
 }
 
-/* Button + privacy link stacked, joined to input */
-.btn-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
-    margin-left: -3px;
+/* ---------- Stage ----------
+   Holds the stacked-PNG (initial) and the 5 individual product PNGs
+   (final spread). Aspect 2:3 to match the birdseye reference. */
+.stage-wrap {
+  width: min(67vh, 92vw);
+  aspect-ratio: 2 / 3;
+  /* Pulled out of the .layout flex flow and centered in the viewport so
+     About Us and the countdown stay anchored at the top while the stack
+     sits at middle-middle. Keeps the spread animation contained on
+     shorter viewports where the bottom row was clipping. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 12px));
 }
 
-#submitBtn {
-    height: 64px;
-    padding: 0 36px;
-    background: #000;
-    color: #fff;
-    border: 3px solid #000;
-    border-radius: 50px;
-    font-family: "barlow", sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
+/* Raise the stage above .cal-add (z-index: 2) once spread so the flying
+   products layer on top of "Mark your calendar" rather than behind it. */
+.stage-wrap:has(.stage.spread) {
+  z-index: 3;
 }
 
-@keyframes btn-press {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(0.93); }
-    100% { transform: scale(1); }
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: default;
 }
 
-#submitBtn.pressed {
-    animation: btn-press 0.18s ease forwards;
-    pointer-events: none;
+/* ---------- Stacked PNG (initial) ----------
+   Transparent bg so the shadow hugs the actual silhouette of the stack.
+   The clip-path approximates the silhouette of the stack (cap on top
+   narrowing in, hoodie shoulders widening, pants narrowing again) — this
+   constrains pointer events so hover/click only fire over the actual
+   clothing, not the empty page space around it. */
+.stacked {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+  clip-path: polygon(
+    37% 22%,   /* top-left of cap crown */
+    63% 22%,   /* top-right of cap crown */
+    72% 32%,   /* right edge, brim extending out */
+    78% 56%,   /* right of hoodie shoulder (widest point) */
+    76% 82%,   /* bottom right of pants */
+    26% 82%,   /* bottom left of pants */
+    22% 56%,   /* left of hoodie shoulder */
+    28% 32%    /* left base of cap */
+  );
+  filter: var(--shadow-rest-stack);
+  transition:
+    filter 0.35s ease,
+    opacity 0.45s ease,
+    transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* Privacy Policy — no underline, centered under Submit, blue on hover */
-.privacy-link {
-    margin-top: 3px;
-    font-size: 11px;
-    font-weight: 400;
-    color: #555;
-    text-decoration: none;
-    transition: color 0.15s;
+.stacked:hover,
+.stage:focus-visible .stacked {
+  transform: scale(1.04);
 }
 
-.privacy-link:hover {
-    color: #0066cc;
+.stage.spread .stacked {
+  opacity: 0;
+  transform: scale(0.94);
+  pointer-events: none;
+  cursor: default;
+  filter: var(--shadow-rest-stack);
 }
 
-/* =====================
-   INTRO ANIMATION
-   Step 1 (0.15s): Eyes rise up from below — 0.7s
-   Step 2 (0.85s): PROUDLY blasts from left, AVERAGE from right — 0.7s
-   Words are independent of the eyes container so they truly come from the sides
-   ===================== */
-
-@keyframes eyes-rise {
-    from { transform: translate3d(0, 110%, 0); }
-    to   { transform: translate3d(0, 0, 0); }
+/* ---------- Individual products ----------
+   Outer <a> handles position + scale + rotation. Inner <img> carries the
+   shadow filter so the resting shadow is always visible while the wrapper
+   animates. Per-product rotation lives in --rot so the hover transform
+   can recompose it without losing the tilt. */
+.product {
+  --rot: 0deg;
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    top 0.95s cubic-bezier(0.22, 0.61, 0.36, 1),
+    left 0.95s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.45s ease 0.05s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
-@keyframes word-left {
-    0%   { transform: translate3d(-100vw, 0, 0); opacity: 0; }
-    15%  { opacity: 1; }
-    88%  { transform: translate3d(10px, 0, 0); }
-    100% { transform: translate3d(0, 0, 0); }
+/* Override transform-duration during the spread fly-out (longer/eased) */
+.stage.spread .product {
+  transition:
+    top 0.95s cubic-bezier(0.22, 0.61, 0.36, 1),
+    left 0.95s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.95s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.45s ease 0.05s;
 }
 
-@keyframes word-right {
-    0%   { transform: translate3d(100vw, 0, 0);  opacity: 0; }
-    15%  { opacity: 1; }
-    88%  { transform: translate3d(-10px, 0, 0); }
-    100% { transform: translate3d(0, 0, 0); }
+.product img {
+  display: block;
+  height: 100%;
+  width: auto;
+  filter: var(--shadow-rest);
+  transition: filter 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* Eyes only — centered by offsetting left by half the SVG width */
-.logo-bottom {
-    position: absolute;
-    bottom: 0;
-    left: calc(50% - 13vw);
-    width: 26vw;
-    z-index: 4;
-    will-change: transform;
-    touch-action: none;
-    -webkit-user-select: none;
-    user-select: none;
-    animation: eyes-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+/* Per-product sizing (height as % of stage) */
+.hoodie    { height: 36%; --rot: -2deg; }
+.cap       { height: 13%; --rot: 12deg; }
+.pants     { height: 32%; --rot:  6deg; }
+.tee-dark  { height: 13%; --rot: -4deg; }
+.tee-white { height: 13%; --rot:  5deg; }
+
+/* ---------- Spread state — birdseye-style positions ---------- */
+.stage.spread .product {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.logo-bottom img {
-    width: 100%;
-    height: auto;
-    display: block;
+.stage.spread .hoodie    { top: 21%; left: 14%; transform: translate(0, 0) scale(1) rotate(var(--rot)); }
+.stage.spread .cap       { top: 25%; left: 64%; transform: translate(0, 0) scale(1) rotate(var(--rot)); }
+.stage.spread .pants     { top: 39%; left: 70%; transform: translate(0, 0) scale(1) rotate(var(--rot)); }
+.stage.spread .tee-dark  { top: 66%; left: 18%; transform: translate(0, 0) scale(1) rotate(var(--rot)); }
+.stage.spread .tee-white { top: 66%; left: 48%; transform: translate(0, 0) scale(1) rotate(var(--rot)); }
+
+/* Stagger so items leave the stack in waves */
+.stage.spread .hoodie    { transition-delay: 0s,     0s,     0s,     0s; }
+.stage.spread .pants     { transition-delay: 0.05s,  0.05s,  0.05s,  0s; }
+.stage.spread .cap       { transition-delay: 0.08s,  0.08s,  0.08s,  0s; }
+.stage.spread .tee-white { transition-delay: 0.11s,  0.11s,  0.11s,  0s; }
+.stage.spread .tee-dark  { transition-delay: 0.14s,  0.14s,  0.14s,  0s; }
+
+/* ---------- Hover (after spread): paper-lift, no glow ----------
+   Transform recomposes scale + the per-product rotation via --rot so the
+   tilt is preserved. translateY(-10px) is the "lift". Inner <img> swaps
+   to the longer hover shadow for the airborne feel. */
+.stage.spread .product:hover,
+.stage.spread .product:focus-visible {
+  transform: translate(0, -10px) scale(1.03) rotate(var(--rot));
+  transition:
+    top 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    left 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.25s ease;
 }
 
-/* PROUDLY + AVERAGE — absolutely positioned, flanking the eyes */
-.logo-word {
-    position: absolute;
-    bottom: 1vw;
-    z-index: 4;
-    pointer-events: none;
-    will-change: transform;
-    font-family: "barlow", sans-serif;
-    font-weight: 800;
-    font-style: italic;
-    font-size: 3.4vw;
-    color: #000;
-    line-height: 1;
-    white-space: nowrap;
+.stage.spread .product:hover img,
+.stage.spread .product:focus-visible img {
+  filter: var(--shadow-hover);
 }
 
-/* Fires after eyes finish: delay = eyes-delay(0.15s) + eyes-duration(0.7s) = 0.85s */
-.logo-word-left {
-    right: calc(50% + 13vw + 2vw);
-    animation: word-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+/* ---------- Drag (after spread) ----------
+   Each product is grabbable. While dragging:
+   - JS writes inline top/left in px to follow the cursor.
+   - Transitions are killed so motion is 1:1 with the cursor.
+   - The hover-lift is canceled (on the dragged item AND on others, via
+     body.is-dragging) so nothing twitches under the cursor.
+   - The dragged item floats to the top via z-index. */
+.stage.spread .product {
+  cursor: grab;
+  touch-action: none;
 }
 
-.logo-word-right {
-    left: calc(50% + 13vw + 2vw);
-    animation: word-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+.stage.spread .product.dragging,
+.stage.spread .product.dragging:hover,
+.stage.spread .product.dragging:focus-visible {
+  cursor: grabbing;
+  transform: translate(0, 0) scale(1) rotate(var(--rot));
+  transition: none;
+  /* Promote to its own GPU layer — kills shadow-trail artifacts on iOS
+     where filter: drop-shadow gets re-rasterized per pointer-move frame. */
+  will-change: transform;
 }
 
-/* Easter egg — hidden behind the eyes, no visual hint */
-.easter-egg {
-    position: absolute;
-    bottom: 12vw;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: "barlow", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    font-style: italic;
-    color: #222;
-    white-space: nowrap;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+.stage.spread .product.dragging img {
+  /* Keep the rest shadow during drag. Swapping to --shadow-hover here
+     caused visible shadow ghosting on iOS as the element moved. */
+  transition: none;
 }
 
-.easter-egg.visible {
-    opacity: 1;
+/* Neutralize hover-lift on non-dragged items while any drag is happening */
+body.is-dragging .stage.spread .product:hover,
+body.is-dragging .stage.spread .product:focus-visible {
+  transform: translate(0, 0) scale(1) rotate(var(--rot));
 }
 
-.easter-egg strong {
-    font-weight: 800;
-    font-style: normal;
+body.is-dragging .stage.spread .product:hover img,
+body.is-dragging .stage.spread .product:focus-visible img {
+  filter: var(--shadow-rest);
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-    main {
-        padding-top: 5vh;
-    }
+/* ===================== Vault easter egg =====================
+   Hidden until JS flips .vault.open. Built from a few stacked
+   SVG primitives — outer door, bolts, inner bezel, spinning dial,
+   flash burst, gold center. The reveal text fades in after the
+   dial finishes its sequence. */
 
-    h1 {
-        font-size: clamp(80px, 20vw, 120px);
-        width: 90vw;
-        margin-bottom: -30px;
-    }
+.vault {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center,
+    rgba(20, 20, 20, 0.96) 0%,
+    rgba(0, 0, 0, 0.98) 100%);
+  z-index: 999;
+  opacity: 0;
+  font-family: "barlow", sans-serif;
+}
 
-    .signup-form input {
-        height: 54px;
-        font-size: 16px;
-        padding: 0 20px;
-    }
+.vault.open {
+  display: flex;
+  animation: vault-fade 0.4s ease-out forwards;
+}
 
-    #submitBtn {
-        height: 54px;
-        font-size: 17px;
-        padding: 0 24px;
-    }
+@keyframes vault-fade {
+  to { opacity: 1; }
+}
 
-    .privacy-link {
-        margin-top: 2px;
-    }
+.vault-stage {
+  position: relative;
+  width: min(420px, 88vw);
+}
 
-    .logo-bottom {
-        left: calc(50% - 21vw);
-        width: 42vw;
-        bottom: env(safe-area-inset-bottom, 0px);
-    }
+.vault-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .logo-word {
-        font-size: 5.5vw;
-    }
+.vault.open .vault-reveal {
+  animation: vault-reveal 0.6s ease-out 0.2s forwards;
+}
 
-    .logo-word-left {
-        right: calc(50% + 21vw + 2vw);
-    }
+@keyframes vault-reveal {
+  to { opacity: 1; pointer-events: auto; }
+}
 
-    .logo-word-right {
-        left: calc(50% + 21vw + 2vw - 3px);
-    }
+.vault-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: #d4af37;
+}
+
+.vault-code {
+  margin: 0;
+  font-size: clamp(44px, 11vw, 88px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(212, 175, 55, 0.45);
+}
+
+.vault-desc {
+  margin: 12px 0 32px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #bdbdbd;
+}
+
+.vault-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vault-btn {
+  font-family: "barlow", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 50px;
+  border: 1.5px solid #d4af37;
+  background: #d4af37;
+  color: #111;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vault-btn:hover { transform: translateY(-1px); }
+.vault-btn:active { transform: translateY(0); }
+
+.vault-btn--ghost {
+  background: transparent;
+  color: #d4af37;
+}
+
+.vault-btn--ghost:hover {
+  background: #d4af37;
+  color: #111;
+}
+
+.vault-btn.copied {
+  background: #fff;
+  border-color: #fff;
+  color: #111;
 }
