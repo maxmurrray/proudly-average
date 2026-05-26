@@ -84,15 +84,14 @@
        The check looks for: (a) all five item centers within 80px of each
        other, and (b) z-index strictly ascending in that sequence. The
        cap must be the last item dragged. ============================ -->
-  <div id="vault" class="vault" aria-hidden="true" role="dialog" aria-labelledby="vault-code">
+  <div id="vault" class="vault" aria-hidden="true" role="dialog" aria-labelledby="vault-heading">
     <div class="vault-stage">
       <div class="vault-reveal">
         <p class="vault-eyebrow">VAULT UNLOCKED</p>
-        <p class="vault-code" id="vault-code">AVERAGE2026</p>
-        <p class="vault-desc">20% off your purchase</p>
+        <p class="vault-heading" id="vault-heading">Congrats, you found it.</p>
+        <p class="vault-desc">DM a screenshot to <strong>@proudlyaverage</strong> on Instagram and we'll send you a free item.</p>
         <div class="vault-actions">
-          <button type="button" class="vault-btn" id="vault-copy">Copy code</button>
-          <button type="button" class="vault-btn vault-btn--ghost" id="vault-close">Close</button>
+          <button type="button" class="vault-btn" id="vault-close">Close</button>
         </div>
       </div>
     </div>
@@ -291,7 +290,6 @@
     }
 
     const vault = document.getElementById('vault');
-    const vaultCopyBtn = document.getElementById('vault-copy');
     const vaultCloseBtn = document.getElementById('vault-close');
 
     function openVault() {
@@ -303,35 +301,9 @@
     function closeVault() {
       vault.classList.remove('open');
       vault.setAttribute('aria-hidden', 'true');
-      // Reset the copy button label in case it's still showing "Copied!".
-      vaultCopyBtn.textContent = 'Copy code';
-      vaultCopyBtn.classList.remove('copied');
       // Allow replay by re-stacking — flip the flag after the fade-out completes.
       setTimeout(() => { vaultUnlocked = false; }, 600);
     }
-
-    vaultCopyBtn.addEventListener('click', async () => {
-      const code = 'AVERAGE2026';
-      try {
-        await navigator.clipboard.writeText(code);
-      } catch {
-        // Older-browser fallback.
-        const t = document.createElement('textarea');
-        t.value = code;
-        t.style.position = 'fixed';
-        t.style.opacity = '0';
-        document.body.appendChild(t);
-        t.select();
-        try { document.execCommand('copy'); } catch {}
-        document.body.removeChild(t);
-      }
-      vaultCopyBtn.classList.add('copied');
-      vaultCopyBtn.textContent = 'Copied!';
-      setTimeout(() => {
-        vaultCopyBtn.classList.remove('copied');
-        vaultCopyBtn.textContent = 'Copy code';
-      }, 1800);
-    });
 
     vaultCloseBtn.addEventListener('click', closeVault);
 
